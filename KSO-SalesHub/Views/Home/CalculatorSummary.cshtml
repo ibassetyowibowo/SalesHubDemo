@@ -1,0 +1,153 @@
+﻿@using KSO_SalesHub.Models.Simulation;
+@model SimulationContainer;
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Summary Calculator</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="~/assets/images/logo_ptm.png" type="image/x-icon">
+	@Html.Partial("Partial/_SimulationFakeCSS")
+	@Html.Partial("Partial/_SimulationFakeJS")
+</head>
+<body class="">
+	<div class="main-wrapper" id="app">
+		<div class="page-wrapper full-page">
+			<div class="page-content d-flex align-items-center justify-content-center body-background px-0 py-1">
+				<div class="row w-100 mx-0" id="calculator_content">
+					<div class="col-md-12 col-xl-12 mx-auto">
+						<div class="card custom-border">
+							<div class="row pb-2">
+								<div class="col-md-12 d-none">
+									<div class="auth-left-wrapper" style="background-image: url('/assets/images/login_frame.png')">
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="auth-form-wrapper p-2 py-0">
+										<div class="mb-0 pt-4 ps-5 pb-4" ps-4>
+											<img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+											<span class="text-secondary">
+												<h4 class="mt-2"><strong>SUMMARY CALCULATOR MITRA</strong></h4>
+												<h5 class="text-muted fw-normal mb-0">Simulate your SPBU profits and earnings with one easy step.</h5>
+											</span>
+										</div>
+										@* <div class="text-center mb-2 mt-3">
+										<img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+										<h4 class="mt-2"><strong>Summary Simulation  Calculator</strong></h4>
+										</div> *@
+										<div class="card mb-2">
+											<div class="card-body p-3 ps-5">
+												<div class="row mb-5 mt-2">
+													<div class="col-sm-12">
+														<div class="container">
+															<div class="row">
+																<div class="col-sm-12 mb-5">
+																	<p style="font-size:16px;">
+																		Terima kasih telah mengunjungi laman Mitra SPBU Simulasi Pertamina Retail.
+																		Kami informasikan hasil simulasi Mitra SPBU anda seperti dibawah ini.
+																		Apabila Anda memerlukan informasi lebih lanjut atau memiliki pertanyaan terkait,
+																		tim kami akan dengan senang hati membantu.
+																	</p>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-8">
+																	<div class="row mb-1 font-12">
+																		<div class="col-4 bot-border d-flex align-items-center text-secondary"><strong>Persen Sharing Margin Mitra</strong></div>
+																		<div class="col-5 bot-border" style="font-size:25px; font-weight:bolder;">: @Model.ResultCalculator.PropSharingMarginMitra%</div>
+																	</div>
+																	<div class="row mb-1 font-12">
+																		<div class="col-4 bot-border d-flex align-items-center text-secondary"><strong>Sharing Margin Mitra</strong></div>
+																		<div class="col-7 bot-border" style="font-size:25px; font-weight:bolder;" id="TotalProfitMitra">: </div>
+																	</div>
+																	<div class="row mb-1 font-12">
+																		<div class="col-4 bot-border d-flex align-items-center text-secondary"><strong>Rekomendasi Skema</strong></div>
+																		<div class="col-7 bot-border py-2" style="font-size:25px; font-weight:bolder;">
+																			:
+																			@if (Model.ResultCalculator.SchemaRecommendation == "Tidak Tersedia")
+																			{
+																				<span class="badge border border-secondary text-secondary">@Model.ResultCalculator.SchemaRecommendation</span>
+																			}
+																			else
+																			{
+																				<span class="badge border border-success text-success">@Model.ResultCalculator.SchemaRecommendation</span>
+																			}
+																		</div>
+																	</div>
+																</div>
+																<div class="col-sm-3">
+																	<div class="row mb-1 font-12 xy-border">
+																		<div class="col-12 bot-border py-2 text-secondary"><strong><center>Resume Kelayakan</center></strong></div>
+																	</div>
+																	<div class="row mb-1 font-12 xy-border">
+																		<div class="col-12 py-4" colspan="3" style="font-size:35px; font-weight:bolder;">
+																			<center>
+																				@if (Model.ResultCalculator.ResumeKelayakan == "LAYAK")
+																				{
+																					<span class="badge rounded-pill bg-success" style=""> &nbsp;&nbsp; @Model.ResultCalculator.ResumeKelayakan &nbsp;&nbsp;</span>
+																				}
+																				else
+																				{
+																					<span class="badge rounded-pill bg-danger" style=""> &nbsp;&nbsp; @Model.ResultCalculator.ResumeKelayakan &nbsp;&nbsp;</span>
+																				}
+																			</center>
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-sm-12 mt-5 text-secondary">
+																	<hr />
+																	<p style="font-size:13px;">
+																		<strong><i>(*)Disclamer: </i></strong>
+																		Hasil yang ditampilkan merupakan kalkulasi simulasi dan bersifat estimasi.
+																		Untuk informasi lebih lanjut, hubungi layanan pelanggan kami.
+																	</p>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card mt-1">
+											<div class="card-body p-3">
+												<div class="row">
+													<div class="col-md-6 text-start">
+													</div>
+													<div class="col-md-6 text-end">
+														<a href="~/calculator-mitra" class="btn btn-danger">
+															<i class="btn-icon-prepend" data-feather="arrow-left-circle"></i>
+															Kembali
+														</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@Html.Partial("Partial/_Footer")
+		</div>
+	</div>
+</body>
+</html>
+
+<script>
+	$(document).ready(function () {
+		const TotalProfitMitra = '@(Model.ResultCalculator.TotalProfitInOHCurency * (decimal)Model.ResultCalculator.PropSharingMarginMitra / 100)';
+
+		formatAndAppendCurrency('TotalProfitMitra', TotalProfitMitra);
+	});
+</script>

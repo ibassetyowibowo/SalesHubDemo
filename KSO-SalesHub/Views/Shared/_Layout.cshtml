@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<title>Admin Panel | Mitra SPBU</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="description" content="overview &amp; stats" />
+	<meta name="author" content="NobleUI">
+	<link rel="icon" href="~/assets/images/logo_ptm.png" type="image/x-icon">
+
+	<link rel="stylesheet" href="~/assets/noble-ui/font/font.css">
+	<link rel="stylesheet" href="~/assets/noble-ui/css/core.css">
+	<link rel="stylesheet" href="~/assets/noble-ui/css/dataTables.bootstrap5.css">
+	<link rel="stylesheet" href="~/assets/noble-ui/css/sweetalert2.min.css">
+	<link rel="stylesheet" href="~/assets/noble-ui/css/iconfont.css">
+	<link rel="stylesheet" href="~/assets/noble-ui/css/flag-icon.min.css">
+	<link rel="stylesheet" href="~/assets/noble-ui/css/style.min.css">
+	<link rel="stylesheet" href="~/assets/option-menu/icons/font-awesome-671/all.min.css">
+	<link rel="stylesheet" href="~/assets/plugins/select2/select2.min.css" />
+
+	<link rel="stylesheet" href="~/css/site.css?v=2" />
+
+	<script src="~/assets/noble-ui/js/core.js"></script>
+	<script src="~/assets/noble-ui/js/sweetalert2.min.js"></script>
+	<script src="~/assets/noble-ui/js/jquery.dataTables.js"></script>
+	<script src="~/assets/noble-ui/js/dataTables.bootstrap5.js"></script>
+	<script src="~/assets/noble-ui/js/data-table.js?v=1"></script>
+	<script src="~/assets/noble-ui/js/feather.min.js"></script>
+	<script src="~/assets/noble-ui/js/template.js"></script>
+	<script src="~/assets/noble-ui/js/sweet-alert.js"></script>
+
+	<script src="~/assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+	<script src="~/assets/plugins/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/assets/plugins/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+	<script src="~/assets/plugins/select2/select2.min.js"></script>
+
+	<script src="~/assets/js/select2.js?v=1"></script>
+	<script src="~/js/site.js?v=1"></script>
+
+	@* Other Plugin *@
+	<script src="https://cdn.jsdelivr.net/npm/jquery.cookie@1.4.1/jquery.cookie.min.js"></script>
+</head>
+<body class="sidebar-folded">
+	<div class="main-wrapper">
+		@Html.Partial("_sidebar")
+		<div class="page-wrapper">
+			@Html.Partial("_header")
+			<div class="page-content">
+				@RenderBody()
+			</div>
+			<footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small">
+				<p class="text-muted mb-1 mb-md-0">Copyright © @DateTime.Now.Year <a href="#" target="_blank">ICT Pertamina Retail</a>.</p>
+				<p class="text-muted">
+					Crafted with passion and dedication, empowering the nation through Pertamina Retail <i class="mb-1 text-primary ms-1 icon-sm" data-feather="heart"></i>
+				</p>
+			</footer>
+		</div>
+	</div>
+
+	<div class="overlay"></div>
+	<div class="spanner">
+		<div class="loader"></div>
+		<p>Mohon menunggu, sedang memproses <strong>Data</strong>.</p>
+	</div>
+</body>
+</html>
+

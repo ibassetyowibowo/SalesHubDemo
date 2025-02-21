@@ -1,0 +1,199 @@
+﻿@using KSO_SalesHub.Models.Simulation;
+@model SimulationContainer;
+@{
+	Layout = "_LayoutCodex";
+}
+
+
+@Html.Partial("_CommonFakeCSS")
+@Html.Partial("_CommonFakeJS")
+
+<div class="container-xxl bg-white p-0">
+
+	<!-- Navbar & Hero Start -->
+	<div class="container-xxl position-relative p-0">
+
+		@Html.Partial("_NavbarCodex")
+
+		<div class="container-xxl bg-custom-1 hero-header">
+			<div class="container my-3 py-0 px-lg-5">
+				<div class="row g-5 py-0">
+					<div class="col-12 text-center">
+						<h1 class="text-white animated slideInDown">SUMMARY CALCULATOR MITRA</h1>
+						<hr class="bg-white mx-auto mt-0" style="width: 90px;">
+						<h6 class="text-white fw-normal mb-4">Simulate your SPBU profits and earnings with one easy step.</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Navbar & Hero End -->
+
+	<div class="container-xxl py-0">
+		<div class="container py-0 px-lg-5">
+			<div class="row g-5 align-items-center">
+				<div class="col-lg-12 wow fadeInUp mt-0" data-wow-delay="0.5s">
+
+					<div class="auth-form-wrapper p-2 py-0">
+						<div class="mb-0 pt-4 ps-5 pb-0" ps-4>
+							<img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+							<span class="text-grey">
+								<h4 class="mt-2" style="color:gray !important"><strong>Summary Calculator Mitra</strong></h4>
+							</span>
+						</div>
+						<div class="card mb-2">
+							<div class="card-body p-3 ps-5">
+								<div class="row mb-3 mt-2">
+									<div class="col-sm-12">
+										<div class="container">
+											<div class="row">
+												<div class="col-sm-12 mb-3">
+													<p style="font-size:16px;">
+														Terima kasih telah mengunjungi laman Mitra SPBU Simulasi Pertamina Retail.
+														Kami informasikan hasil simulasi Mitra SPBU anda seperti dibawah ini.
+														Apabila Anda memerlukan informasi lebih lanjut atau memiliki pertanyaan terkait,
+														tim kami akan dengan senang hati membantu.
+													</p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-8">
+													<div class="row mb-1 font-12">
+														<div class="col-4 bot-border d-flex align-items-center text-grey"><strong>Sharing Margin Mitra <i>( % )</i></strong></div>
+														<div class="col-5 bot-border" style="font-size:25px; font-weight:bolder; color:orangered;">: @Model.ResultCalculator.PropSharingMarginMitra%</div>
+													</div>
+													<div class="row mb-1 font-12">
+														<div class="col-4 bot-border d-flex align-items-center text-grey"><strong>Sharing Margin Mitra <i>( IDR )</i></strong></div>
+														<div class="col-7 bot-border" style="font-size:25px; font-weight:bolder; color:orangered;" id="TotalProfitMitra">: </div>
+													</div>
+													<div class="row mb-1 font-12">
+														<div class="col-4 bot-border d-flex align-items-center text-grey"><strong>Rekomendasi Skema</strong></div>
+														@if (Model.ResultCalculator.SchemaRecommendation == "Tidak Tersedia")
+														{
+															<div class="col-7 bot-border py-2" style="font-size:25px; font-weight:bolder;">
+																:
+																<span class="badge border border-grey text-grey">@Model.ResultCalculator.SchemaRecommendation</span>
+															</div>
+														}
+														else
+														{
+															int index = 0;
+															string schemaRecommendation = @Model.ResultCalculator.SchemaRecommendation;
+															var splitValues = schemaRecommendation.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+															<div class="col-7 py-2 bot-border" style="font-weight:bolder;">
+																@foreach (var value in splitValues)
+																{
+																	if (!string.IsNullOrEmpty(value))
+																	{
+																		index += 1;
+																		<div class="row mb-1 ps-3">
+																			<div class="col-12 d-flex align-items-center text-grey p-2 py-0" style="font-size:15px;">
+																				<i class="fa fa-check-circle text-success"></i> &nbsp;
+																				Prioritas @index : &nbsp;&nbsp; <span class="badge border border-success text-success">@value</span>
+																			</div>
+																		</div>
+																	}
+																}
+															</div>
+														}
+													</div>
+												</div>
+												<div class="col-sm-3">
+													<div class="row mb-1 font-12 xy-border">
+														<div class="col-12 bot-border py-2 text-grey"><strong><center>Resume Kelayakan</center></strong></div>
+													</div>
+													<div class="row mb-1 font-12 xy-border">
+														<div class="col-12 py-4" colspan="3" style="font-size:35px; font-weight:bolder;">
+															<center>
+																@if (Model.ResultCalculator.ResumeKelayakan == "LAYAK")
+																{
+																	<span class="badge rounded-pill bg-success py-4" style=""> &nbsp;&nbsp; @Model.ResultCalculator.ResumeKelayakan &nbsp;&nbsp;</span>
+																}
+																else
+																{
+																	<span class="badge rounded-pill bg-danger" style=""> &nbsp;&nbsp; @Model.ResultCalculator.ResumeKelayakan &nbsp;&nbsp;</span>
+																}
+															</center>
+														</div>
+
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12 mt-5 text-grey">
+													<hr />
+													<p style="font-size:13px;">
+														<strong><i>(*)Disclamer: </i></strong>
+														Hasil yang ditampilkan merupakan kalkulasi simulasi dan bersifat estimasi.
+														Untuk informasi lebih lanjut, hubungi layanan pelanggan kami.
+													</p>
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mt-3 mb-4 mt-1">
+							<div class="row">
+								<div class="col-md-6 text-start">
+									<a href="~/" class="btn btn-danger">
+										<i class="btn-icon-prepend" data-feather="arrow-left-circle"></i>
+										Keluar
+									</a>
+								</div>
+								<div class="col-md-6 text-end">
+									<a href="~/calculator-mitra" class="btn bg-custom-1 text-white" style="">
+										Hitung Simulasi Lagi
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Footer Start -->
+@Html.Partial("_FooterCodex")
+<!-- Footer End -->
+<!-- Back to Top -->
+<a href="#" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+
+<style>
+
+	body {
+		background-color: transparent !important;
+	}
+
+	.text-grey {
+		color: grey !important;
+	}
+	/* Add this to your custom CSS file */
+	.border-grey {
+		border: 1px solid grey !important; /* You can replace this with your desired color */
+	}
+
+</style>
+
+<script>
+	window.onload = function () {
+		// Get the middle of the page's height
+		var middle = document.body.scrollHeight / 2;
+
+		// Scroll to the middle of the page
+		window.scrollTo(0, middle - 385);
+	};
+
+	$(document).ready(function () {
+		const TotalProfitMitra = '@(Model.ResultCalculator.TotalProfitInOHCurency * (decimal)Model.ResultCalculator.PropSharingMarginMitra / 100)';
+
+		formatAndAppendCurrency('TotalProfitMitra', TotalProfitMitra);
+	});
+</script>

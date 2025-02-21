@@ -1,0 +1,239 @@
+﻿@using KSO_SalesHub.Models.Simulation;
+@model SimulationContainer;
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculator - Mitra SPBU</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="~/assets/images/logo_ptm.png" type="image/x-icon">
+	@Html.Partial("Partial/_SimulationFakeCSS")
+	@Html.Partial("Partial/_SimulationFakeJS")
+</head>
+<body class="">
+	<div class="main-wrapper" id="app">
+		<div class="page-wrapper full-page">
+			<div class="page-content d-flex align-items-center justify-content-center body-background px-0 py-1">
+				<div class="row w-100 mx-0" id="calculator_content">
+					<div class="col-md-12 col-xl-12 mx-auto">
+						<div class="row pb-2 ">
+							<div class="col-md-12">
+								<div class="card mt-1 custom-border">
+									<div class="card-body p-3 pb-0">
+										<div class="row pb-0">
+											<div class="col-md-12 d-none">
+												<div class="auth-left-wrapper" style="background-image: url('/assets/images/login_frame.png')">
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="auth-form-wrapper p-2 py-2">
+													<div class="mb-0 pt-2 ps-5" ps-4>
+														<img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+														<span class="text-secondary">
+															<h4 class="mt-2"><strong>CALCULATOR MITRA</strong></h4>
+															<h5 class="text-muted fw-normal mb-0">Simulate your SPBU profits and earnings with one easy step.</h5>
+														</span>
+													</div>
+													<form class="form_calculator p-4 pb-3" id="form_calculator" action="/summary" method="POST" autocomplete="off">
+														<div class="card mb-2">
+															<div class="card-body p-4 pb-2">
+																<div class="row ">
+																	<div class="col-sm-6">
+																		<div class="row mb-2 d-flex justify-content-between">
+																			<div class="col-sm-3 d-flex align-items-center justify-content-end">
+																				<label for="NomorSPBU" class="col-form-label">Nomor SPBU</label>
+																			</div>
+																			<div class="col-sm-9">
+																				@Html.DropDownListFor(model => model._calculator.NomorSPBU, Model._NoSPBUListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "NomorSPBU" })
+																			</div>
+																		</div>
+																	</div>
+																	<!-- Second Column: Lokasi SPBU -->
+																	<div class="col-sm-6">
+																		<div class="row mb-2 d-flex justify-content-between">
+																			<div class="col-sm-3 d-flex align-items-center justify-content-end">
+																				<label for="SPBUType" class="col-form-label">Type SPBU</label>
+																			</div>
+																			<div class="col-sm-9">
+																				@Html.DropDownListFor(model => model._calculator.SPBUType, Model._SPBUTypeListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "SPBUType" })
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="row ">
+																	<div class="col-sm-6 hide">
+																		<div class="row mb-2 d-flex justify-content-between">
+																			<div class="col-sm-3 d-flex align-items-center justify-content-end">
+																				<label for="LokasiSPBU" class="col-form-label">Lokasi SPBU</label>
+																			</div>
+																			<div class="col-sm-9">
+																				@Html.DropDownListFor(model => model._calculator.LokasiSPBU, Model._LokasiSPBUListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "LokasiSPBU" })
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-sm-6">
+																		<div class="row mb-2 d-flex justify-content-between">
+																			<div class="col-sm-3 d-flex align-items-center justify-content-end">
+																				<label for="SPBUGrading" class="col-form-label">Grading SPBU</label>
+																			</div>
+																			<div class="col-sm-9">
+																				@Html.DropDownListFor(model => model._calculator.SPBUGrading, Model._SPBUGradingListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "SPBUGrading" })
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-sm-6">
+																		<div class="row mb-2 d-flex justify-content-between">
+																			<div class="col-sm-3 d-flex align-items-center justify-content-end">
+																				<label for="TaxStatus" class="col-form-label">Status PKP</label>
+																			</div>
+																			<div class="col-sm-9">
+																				@Html.DropDownListFor(model => model._calculator.TaxStatus, Model._taxStatusListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "TaxStatus" })
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="row hide">
+																	<div class="col-sm-6">
+																		<div class="row mb-2 d-flex justify-content-between">
+																			<div class="col-sm-3 d-flex align-items-center justify-content-end">
+																				<label for="umk" class="col-form-label">Jumlah UMP</label>
+																			</div>
+																			<div class="col-sm-9">
+																				@Html.EditorFor(model => model._calculator.UMK,
+																																						new
+																																						{
+																																							htmlAttributes = new
+																																							{
+																																								@class = "form-control form-control-sm small-input",
+																																								@id = "umk",
+																																								placeholder = " -- Jumlah UMK --",
+																																								@readonly = "readonly"
+																																							}
+																																						})
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="card">
+															<div class="card-body p-2">
+																<h8 class="card-title">
+																	<span class="text-success">
+																		<i style="margin-top:0px !important;" class="feather-17" data-feather="trello"></i>
+																		Rata-rata 3 bulan terakhir per produk per bulan
+																	</span>
+																</h8>
+																<hr class="mt-2" style="border-top: 2px dashed #07561c;" />
+																<div class="table-responsive p-2 pt-0">
+																	<table class="table table-sm table-no-padding table-striped">
+																		<tbody>
+																			@for (int i = 0; i < Model._calculator._productDtoLs.Count; i += 2)
+																			{
+																				@Html.HiddenFor(m => m._calculator._productDtoLs[i].Category)
+																				@Html.HiddenFor(m => m._calculator._productDtoLs[i].ProductCode)
+																				@Html.HiddenFor(m => m._calculator._productDtoLs[i].ProductName)
+																				@Html.HiddenFor(m => m._calculator._productDtoLs[i].Price)
+																				@Html.HiddenFor(m => m._calculator._productDtoLs[i].MarginDefault)
+																				<tr>
+																					<!-- Left Column (Product Name) -->
+																					<td style="vertical-align: middle; width: 230px; text-align:right !important;">
+																						<div style="padding-left: 10px; font-size:11px;">
+																							<b>#Produk @Model._calculator._productDtoLs[i].ProductName</b><i style="color:gray"> (Liter)</i>
+																						</div>
+																					</td>
+
+																					<!-- Right Column (Price Input) -->
+																					<td>
+																						@Html.EditorFor(model => Model._calculator._productDtoLs[i].SalesPerMonth,
+																																								new
+																																								{
+																																									htmlAttributes = new
+																																									{
+																																										@class = "form-control form-control-sm small-input",
+																																										@id = "SalesPerMonth" + i,
+																																										placeholder = "-- Masukan SalesPerMonth Baru --"
+																																									}
+																																								})
+																					</td>
+																					@if (i + 1 < Model._calculator._productDtoLs.Count)
+																					{
+																						@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].Category)
+																						@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].ProductCode)
+																						@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].ProductName)
+																						@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].Price)
+																						@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].MarginDefault)
+
+																						<td style="vertical-align: middle; width: 230px; text-align:right !important;">
+																							<div style="padding-left: 10px; font-size:11px;">
+																								<b>#Produk @Model._calculator._productDtoLs[i + 1].ProductName</b> <i style="color:gray"> (Liter)</i>
+																							</div>
+																						</td>
+																						<td>
+																							@Html.EditorFor(model => Model._calculator._productDtoLs[i + 1].SalesPerMonth,
+																																									new
+																																									{
+																																										htmlAttributes = new
+																																										{
+																																											@class = "form-control form-control-sm small-input",
+																																											@id = "SalesPerMonth" + (i + 1),
+																																											placeholder = "-- Masukan SalesPerMonth Baru --"
+																																										}
+																																									})
+																						</td>
+																					}
+																				</tr>
+																			}
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+														<div class="mt-3 mb-0 mt-4">
+															<div class="row">
+																<div class="col-md-6 text-start">
+																	<a href="~/login" class="btn btn-danger">
+																		<i class="btn-icon-prepend" data-feather="arrow-left-circle"></i>
+																		Keluar
+																	</a>
+																</div>
+																<div class="col-md-6 text-end">
+																	<button type="submit" class="btn w-100 mr-2 mb-2 mb-md-0" style="background-color:#2184be !important; color:white;">
+																		Hitung Total Sales
+																	</button>
+																</div>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@Html.Partial("Partial/_Footer")
+		</div>
+	</div>
+</body>
+</html>
+
+
+<div class="overlay"></div>
+<div class="spanner">
+	<div class="loader"></div>
+	<p>Mohon menunggu, sedang memproses <strong>Data</strong>.</p>
+</div>
+
+<script>
+	document.getElementById("form_calculator").addEventListener("submit", validateFormCalculator);
+</script>

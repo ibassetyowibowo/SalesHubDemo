@@ -1,0 +1,331 @@
+﻿@using KSO_SalesHub.Models.Simulation;
+@model SimulationContainer;
+
+@{
+	Layout = "_LayoutCodex";
+}
+
+@Html.Partial("_CommonFakeCSS")
+@Html.Partial("_CommonFakeJS")
+
+<div class="container-xxl bg-white p-0">
+
+	<!-- Navbar & Hero Start -->
+	<div class="container-xxl position-relative p-0">
+
+		@Html.Partial("_NavbarCodex")
+
+		<div class="container-xxl bg-custom-1 hero-header">
+			<div class="container my-3 py-0 px-lg-5">
+				<div class="row g-5 py-0">
+					<div class="col-12 text-center">
+						<h1 class="text-white animated slideInDown">CALCULATOR MITRA</h1>
+						<hr class="bg-white mx-auto mt-0" style="width: 90px;">
+						<h6 class="text-white fw-normal mb-4">Simulate your SPBU profits and earnings with one easy step.</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Navbar & Hero End -->
+
+	<div class="container-xxl py-0">
+		<div class="container py-0 px-lg-5">
+			<div class="row g-5 align-items-center">
+				<div class="col-lg-12 wow fadeInUp mt-0" data-wow-delay="0.5s">
+
+					<div class="auth-form-wrapper px-1 py-0">
+						<div class=" px-5 mb-0 mt-0 pt-0">
+							<img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+							<span class="text-secondary">
+								<h4 class="mt-2" style="color:gray !important"><strong>Simulasi Profits SPBU</strong></h4>
+							</span>
+						</div>
+
+						<div class="row">
+							<div class="col-md-12 grid-margin stretch-card">
+
+								<form class="form_calculator p-4 pb-3 pt-0" id="form_calculator" action="/public/summary" method="POST" autocomplete="off">
+									<div class="card mb-2">
+										<div class="card-body p-4 pb-2">
+											<div class="row ">
+												<div class="col-sm-6">
+													<div class="row mb-2 d-flex justify-content-between">
+														<div class="col-sm-3 d-flex align-items-center justify-content-end">
+															<label for="NomorSPBU" class="col-form-label">Nomor SPBU</label>
+														</div>
+														<div class="col-sm-9">
+															@Html.DropDownListFor(model => model._calculator.NomorSPBU, Model._NoSPBUListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "NomorSPBU" })
+														</div>
+													</div>
+												</div>
+												<!-- Second Column: Lokasi SPBU -->
+												<div class="col-sm-6">
+													<div class="row mb-2 d-flex justify-content-between">
+														<div class="col-sm-3 d-flex align-items-center justify-content-end">
+															<label for="SPBUType" class="col-form-label">Type SPBU</label>
+														</div>
+														<div class="col-sm-9">
+															@Html.DropDownListFor(model => model._calculator.SPBUType, Model._SPBUTypeListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "SPBUType" })
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row ">
+												<div class="col-sm-6 d-none">
+													<div class="row mb-2 d-flex justify-content-between">
+														<div class="col-sm-3 d-flex align-items-center justify-content-end">
+															<label for="LokasiSPBU" class="col-form-label">Lokasi SPBU</label>
+														</div>
+														<div class="col-sm-9">
+															@Html.DropDownListFor(model => model._calculator.LokasiSPBU, Model._LokasiSPBUListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "LokasiSPBU" })
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="row mb-2 d-flex justify-content-between">
+														<div class="col-sm-3 d-flex align-items-center justify-content-end">
+															<label for="SPBUGrading" class="col-form-label">Grading SPBU</label>
+														</div>
+														<div class="col-sm-9">
+															@Html.DropDownListFor(model => model._calculator.SPBUGrading, Model._SPBUGradingListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "SPBUGrading" })
+														</div>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="row mb-2 d-flex justify-content-between">
+														<div class="col-sm-3 d-flex align-items-center justify-content-end">
+															<label for="TaxStatus" class="col-form-label">Status PKP</label>
+														</div>
+														<div class="col-sm-9">
+															@Html.DropDownListFor(model => model._calculator.TaxStatus, Model._taxStatusListItem, new { @class = "form-control-sm js-example-basic-single form-select", @id = "TaxStatus" })
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row d-none">
+												<div class="col-sm-6">
+													<div class="row mb-2 d-flex justify-content-between">
+														<div class="col-sm-3 d-flex align-items-center justify-content-end">
+															<label for="umk" class="col-form-label">Jumlah UMP</label>
+														</div>
+														<div class="col-sm-9">
+															@Html.EditorFor(model => model._calculator.UMK,
+																														new
+																														{
+																															htmlAttributes = new
+																															{
+																																@class = "form-control form-control-sm small-input",
+																																@id = "umk",
+																																placeholder = " -- Jumlah UMK --",
+																																@readonly = "readonly"
+																															}
+																														})
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="card">
+										<div class="card-body p-2">
+											<h8 class="card-title">
+												<span class="text-tema">
+													<i style="margin-top:0px !important;" class="feather-17" data-feather="trello"></i>
+													<strong>Rata-rata 3 bulan terakhir per produk per bulan</strong>
+												</span>
+											</h8>
+											<hr class="mt-2" style="border-top: 2px dashed #07561c;" />
+											<div class="table-responsive p-2 pt-0">
+												<table class="table table-sm table-no-padding table-striped">
+													<tbody>
+														@for (int i = 0; i < Model._calculator._productDtoLs.Count; i += 2)
+														{
+															@Html.HiddenFor(m => m._calculator._productDtoLs[i].Category)
+															@Html.HiddenFor(m => m._calculator._productDtoLs[i].ProductCode)
+															@Html.HiddenFor(m => m._calculator._productDtoLs[i].ProductName)
+															@Html.HiddenFor(m => m._calculator._productDtoLs[i].Price)
+															@Html.HiddenFor(m => m._calculator._productDtoLs[i].MarginDefault)
+															<tr>
+																<!-- Left Column (Product Name) -->
+																<td style="vertical-align: middle; width: 230px; text-align:right !important;">
+																	<div style="padding-left: 10px; font-size:11px;">
+																		<b>#Produk @Model._calculator._productDtoLs[i].ProductName</b><i style="color:gray"> (Liter)</i>
+																	</div>
+																</td>
+
+																<!-- Right Column (Price Input) -->
+																<td>
+																	@Html.EditorFor(model => Model._calculator._productDtoLs[i].SalesPerMonth,
+																																new
+																																{
+																																	htmlAttributes = new
+																																	{
+																																		@class = "form-control form-control-lg small-input",
+																																		@id = "SalesPerMonth" + i,
+																																		placeholder = "-- Masukan Sales " + Model._calculator._productDtoLs[i].ProductName + " --"
+																																	}
+																																})
+																</td>
+																@if (i + 1 < Model._calculator._productDtoLs.Count)
+																{
+																	@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].Category)
+																	@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].ProductCode)
+																	@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].ProductName)
+																	@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].Price)
+																	@Html.HiddenFor(m => m._calculator._productDtoLs[i + 1].MarginDefault)
+
+																	<td style="vertical-align: middle; width: 230px; text-align:right !important;">
+																		<div style="padding-left: 10px; font-size:11px;">
+																			<b>#Produk @Model._calculator._productDtoLs[i + 1].ProductName</b> <i style="color:gray"> (Liter)</i>
+																		</div>
+																	</td>
+																	<td>
+																		@Html.EditorFor(model => Model._calculator._productDtoLs[i + 1].SalesPerMonth,
+																																	new
+																																	{
+																																		htmlAttributes = new
+																																		{
+																																			@class = "form-control form-control-lg small-input",
+																																			@id = "SalesPerMonth" + (i + 1),
+																																			placeholder = "-- Masukan Sales " + Model._calculator._productDtoLs[i].ProductName + " --"
+																																		}
+																																	})
+																	</td>
+																}
+															</tr>
+														}
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									<div class="mt-3 mb-0 mt-4">
+										<div class="row">
+											<div class="col-md-6 text-start">
+												<a href="~/login" class="btn btn-danger">
+													<i class="btn-icon-prepend" data-feather="arrow-left-circle"></i>
+													Keluar
+												</a>
+											</div>
+											<div class="col-md-6 text-end">
+												<button type="submit" class="btn w-100 mr-2 mb-2 mb-md-0 bg-custom-1" style="color:white;">
+													Hitung Total Sales
+												</button>
+											</div>
+										</div>
+									</div>
+								</form>
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Footer Start -->
+	@Html.Partial("_FooterCodex")
+	<!-- Footer End -->
+	<!-- Back to Top -->
+	<a href="#" class="btn btn-lg btn-secondary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+</div>
+
+
+<script>
+
+	window.onload = function () {
+		// Get the middle of the page's height
+		var middle = document.body.scrollHeight / 2;
+
+		// Scroll to the middle of the page
+		window.scrollTo(0, middle - 385);
+	};
+
+	var form = $("#registerForm");
+	form.validate({
+		rules: {
+			'StationNo': {
+				required: true,
+				number: true
+			},
+			'TlpOwner': {
+				required: true,
+				number: true
+			}
+		},
+		messages: {
+			'StationNo': {
+				required: "Kolom ini wajib diisi.",
+				number: "Harap masukkan angka yang valid."
+			},
+			'TlpOwner': {
+				required: "Kolom ini wajib diisi.",
+				number: "Harap masukkan angka yang valid."
+			}
+		}
+	});
+
+	$('.required').each(function () {
+		$(this).rules('add', {
+			required: true,
+			messages: {
+				required: "Kolom ini wajib diisi."
+			}
+		});
+	});
+
+	$('.email').each(function () {
+		$(this).rules('add', {
+			required: true,
+			email: true,
+			messages: {
+				required: "Kolom ini wajib diisi.",
+				email: "Harap masukkan alamat email yang valid."
+			}
+		});
+	});
+
+
+	form.children("div").steps({
+		headerTag: "h2",
+		bodyTag: "section",
+		transitionEffect: "slideLeft",
+		transitionEffectSpeed: 350,
+		labels: {
+			previous: "Back",  // Custom label for the Previous button
+			next: "Next",    // Custom label for the Next button
+			finish: "Continue"      // Custom label for the Finish button
+		},
+		onStepChanged: function (event, currentIndex, priorIndex) {
+
+		},
+		onStepChanging: function (event, currentIndex, newIndex) {
+
+			$('.js-example-basic-single').select2('destroy').select2({
+				escapeMarkup: function (markup) {
+					return markup;
+				},
+				width: '100%'
+			});
+
+			form.validate().settings.ignore = ":disabled,:hidden";
+			return form.valid();
+		},
+		onFinishing: function (event, currentIndex) {
+			form.validate().settings.ignore = ":disabled";
+			return form.valid();
+		},
+		onFinished: function (event, currentIndex) {
+			event.preventDefault();
+			showLoading();
+			form.submit();
+		}
+	});
+
+
+</script>
+

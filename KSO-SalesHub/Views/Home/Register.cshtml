@@ -1,0 +1,368 @@
+﻿@using KSO_SalesHub.Models.Simulation.Dto;
+@model StationDto;
+
+@{
+	Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Sign up - Mitra SPBU</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="NobleUI">
+	<meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<link rel="icon" href="~/assets/images/logo_ptm.png" type="image/x-icon">
+	@Html.Partial("Partial/_SimulationFakeCSS")
+	@Html.Partial("Partial/_SimulationFakeJS")
+</head>
+
+<body>
+	<div class="main-wrapper">
+		<div class="page-wrapper full-page">
+			<div class="page-content d-flex align-items-center justify-content-center body-background">
+
+				<div class="row w-100 mx-0 auth-page">
+					<div class="col-md-12 col-xl-12 mx-auto">
+						<div class="card custom-border">
+							<div class="row">
+								<div class="col-md-4 pe-md-0">
+									<div class="auth-side-wrapper-custom">
+									</div>
+								</div>
+								<div class="col-md-8 ps-md-0">
+									<div class="auth-form-wrapper px-1 py-1">
+										<div class=" px-5 mb-0 mt-4">
+											<img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+											<span class="text-secondary">
+												<h4 class="mt-2"><strong>SIGN UP MITRA SPBU</strong></h4>
+												<h6 class="text-muted fw-normal mb-4">Provide your information and simulate your SPBU profits & earnings. Sign up now!</h6>
+											</span>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12 grid-margin stretch-card">
+												<div class="card">
+													<div class="card-body">
+														<form class="forms-sample px-5 pt-0 mt-0" id="registerForm" action="/submit-register" method="POST" autocomplete="off">
+															<div id="wizard-register">
+																<h2 class="">Basic Information</h2>
+																<section class="px-4 panel-1">
+																	<div class="row mt-2">
+																		<div class="col-sm-12 ms-3">
+																			<div class="row">
+																				<div class="col-12 col-sm-4 mb-2 pe-1">
+																					<label for="StationNo" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Nomor SPBU:</strong>
+																					</label>
+																					@Html.EditorFor(model => model.StationNo, new
+																						{
+																							htmlAttributes = new
+																							{
+																								@class = "form-control form-control-sm small-input required number",
+																								@id = "StationNo",
+																								placeholder = " -- Nomor SPBU --"
+																							}
+																						})
+																				</div>
+																				<div class="col-12 col-sm-8 mb-2 pe-1">
+																					<label for="NamaBadanUsaha" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Nama Badan Usaha:</strong>
+																					</label>
+																					@Html.EditorFor(model => model.NamaBadanUsaha, new
+																						{
+																							htmlAttributes = new
+																							{
+																								@class = "form-control form-control-sm small-input required",
+																								@id = "NamaBadanUsaha",
+																								placeholder = " -- Nama Badan Usaha --"
+																							}
+																						})
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-12 col-sm-12 mb-2 pe-1">
+																					<label for="exampleInputUsername1" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Kota/kabupaten:</strong>
+																					</label>
+																					@Html.DropDownListFor(model => model.txt_alamat, Model._LokasiSPBUListItem, new
+																						{
+																							@class = "form-control form-control-sm js-example-basic-single form-select form-select-sm small-input required",
+																							@id = "LokasiSPBU"
+																						})
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-12 col-sm-12 mb-2 pe-1">
+																					<label for="exampleInputUsername1" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Alamat:</strong>
+																					</label>
+																					@Html.TextAreaFor(model => model.StationAddress, new
+																						{
+																							@class = "form-control form-control-sm small-input-area required",
+																							rows = "2",
+																							placeholder = " -- Alamat -- ",
+																							@id = "StationAddress"
+																						})
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</section>
+
+																<h2>Schema Condition</h2>
+																<section class="px-4 panel-2">
+																	<div class="row mt-2">
+																		<div class="col-sm-12 ms-3">
+																			<div class="row">
+																				<div class="col-12 col-sm-6 mb-2 pe-1">
+																					<!-- col-12 for small screens, col-sm-6 for larger screens -->
+																					<label for="Sarfas" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Kondisi Sarfas (Sarana fasilitas):</strong>
+																					</label>
+																					@Html.DropDownListFor(model => model.Sarfas, Model._sarfasListItem, new
+																						{
+																							@class = "form-control form-control-sm js-example-basic-single form-select form-select-sm small-input required",
+																							@id = "Sarfas"
+																						})
+																				</div>
+
+																				<div class="col-12 col-sm-6 mb-2 pe-1">
+																					<!-- col-12 for small screens, col-sm-6 for larger screens -->
+																					<label for="Losses" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Losses :</strong>
+																					</label>
+																					@Html.DropDownListFor(model => model.Losses, Model._lossesListItem, new
+																						{
+																							@class = "form-control form-control-sm js-example-basic-single form-select form-select-sm small-input required",
+																							@id = "Losses"
+																						})
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<!-- First Dropdown: Kondisi Lokasi -->
+																				<div class="col-12 col-sm-6 mb-2 pe-1">
+																					<label for="KondisiLokasi" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Kondisi Lokasi:</strong>
+																					</label>
+																					@Html.DropDownListFor(model => model.KondisiLokasi, Model._kondisiLokasiListItem, new
+																						{
+																							@class = "form-control form-control-sm js-example-basic-single form-select form-select-sm small-input required",
+																							@id = "KondisiLokasi"
+																						})
+																				</div>
+
+																				<!-- Second Dropdown: Kendala SPBU -->
+																				<div class="col-12 col-sm-6 mb-2 pe-1">
+																					<label for="KendalaSPBU" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Kendala SPBU:</strong>
+																					</label>
+																					@Html.DropDownListFor(model => model.KendalaSPBU, Model._kendalaSPBUListItem, new
+																						{
+																							@class = "form-control form-control-sm js-example-basic-single form-select form-select-sm small-input required",
+																							@id = "KendalaSPBU"
+																						})
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-12 col-sm-12 mb-2 pe-1">
+																					<label for="KomponenProduk" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																						<strong>Komponen Produk:</strong>
+																					</label>
+																					@Html.DropDownListFor(model => model.KomponenProduk, Model._komponenProdukListItem, new
+																						{
+																							@class = "form-control form-control-sm js-example-basic-single form-select form-select-sm small-input required",
+																							@id = "KomponenProduk"
+																						})
+																				</div>
+																			</div>
+
+																		</div>
+																	</div>
+																</section>
+
+
+																<h2>Owner Information</h2>
+																<section class="px-4 panel-3">
+																	<div class="row mt-2">
+																		<div class="col-sm-12 ms-3">
+																			<div class="mb-2 mt-0">
+																				<label for="exampleInputUsername1" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																					<strong>No Telepon:</strong>
+																				</label>
+																				@Html.EditorFor(model => model.TlpOwner, new
+																					{
+																						htmlAttributes = new
+																						{
+																							@class = "form-control form-control-sm small-input required number",
+																							@id = "TlpOwner",
+																							placeholder = " -- No Telepon Owner --"
+																						}
+																					})
+																			</div>
+
+																			<div class="mb-2">
+																				<label for="exampleInputUsername1" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																					<strong>Nama Lengkap:</strong>
+																				</label>
+																				@Html.EditorFor(model => model.NamaLengkapOwner, new
+																					{
+																						htmlAttributes = new
+																						{
+																							@class = "form-control form-control-sm small-input required",
+																							@id = "NamaLengkapOwner",
+																							placeholder = " -- Nama Lengkap Owner --"
+																						}
+																					})
+																			</div>
+
+																			<div class="mb-2">
+																				<label for="exampleInputUsername1" class="form-label mb-0 pb-0 label-input" style="font-size:11px;">
+																					<strong>Alamat Email</strong>:
+																					<span style="font-size:9px !important; color:grey;">
+																						<i>( Masukkan email Anda untuk menerima hasil simulasi kalkulator  ) </i>
+																					</span>
+																				</label>
+																				@Html.EditorFor(model => model.EmailOwner, new
+																					{
+																						htmlAttributes = new
+																						{
+																							@class = "form-control form-control-sm small-input required email",
+																							@id = "EmailOwner",
+																							placeholder = " -- Email Owner --"
+																						}
+																					})
+																			</div>
+																		</div>
+																	</div>
+																</section>
+															</div>
+														</form>
+														<div class="row mt-2">
+															<div class="col-sm-12 ms-3 ps-5 text-secondary" style="font-size:12px;">
+																Anda sudah pernah mendaftar? Silakan masuk ke  <a href="~/login"><b>halaman login</b></a>.
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			@Html.Partial("Partial/_Footer")
+		</div>
+	</div>
+</body>
+</html>
+
+<div class="overlay"></div>
+<div class="spanner">
+	<div class="loader"></div>
+	<p>Mohon menunggu, sedang memproses <strong>Data</strong>.</p>
+</div>
+
+
+<style>
+	#wizard-register .content {
+		min-height: 200px !important;
+		height: 270px !important;
+		overflow: hidden;
+	}
+
+</style>
+
+<script>
+	document.getElementById("registerForm").addEventListener("submit", validateForm);
+
+	var form = $("#registerForm");
+
+	form.validate({
+		rules: {
+			'StationNo': {
+				required: true,
+				number: true
+			},
+			'TlpOwner': {
+				required: true,
+				number: true
+			}
+		},
+		messages: {
+			'StationNo': {
+				required: "Kolom ini wajib diisi.",
+				number: "Harap masukkan angka yang valid."
+			},
+			'TlpOwner': {
+				required: "Kolom ini wajib diisi.",
+				number: "Harap masukkan angka yang valid."
+			}
+		}
+	});
+
+	$('.required').each(function () {
+		$(this).rules('add', {
+			required: true,
+			messages: {
+				required: "Kolom ini wajib diisi."
+			}
+		});
+	});
+
+	$('.email').each(function () {
+		$(this).rules('add', {
+			required: true,
+			email: true,
+			messages: {
+				required: "Kolom ini wajib diisi.",
+				email: "Harap masukkan alamat email yang valid."
+			}
+		});
+	});
+
+
+	form.children("div").steps({
+		headerTag: "h2",
+		bodyTag: "section",
+		transitionEffect: "fade",
+		labels: {
+			previous: "Back",  // Custom label for the Previous button
+			next: "Next",    // Custom label for the Next button
+			finish: "Continue"      // Custom label for the Finish button
+		},
+		onStepChanged: function (event, currentIndex, priorIndex) {
+			if (currentIndex === 1) {
+				$('.js-example-basic-single').select2('destroy').select2({
+					escapeMarkup: function (markup) {
+						return markup;
+					},
+					width: '100%'
+				});
+			}
+		},
+		onStepChanging: function (event, currentIndex, newIndex) {
+			form.validate().settings.ignore = ":disabled,:hidden";
+			return form.valid();
+		},
+		onFinishing: function (event, currentIndex) {
+			form.validate().settings.ignore = ":disabled";
+			return form.valid();
+		},
+		onFinished: function (event, currentIndex) {
+			event.preventDefault();
+			showLoading();
+			form.submit();
+		}
+	});
+
+</script>
+

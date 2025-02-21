@@ -1,0 +1,70 @@
+﻿@{
+	string CurrentUser = "";
+	var username = "";
+	var email = "";
+	if (User.Claims.FirstOrDefault() != null)
+	{
+		CurrentUser = User.Claims.FirstOrDefault(x => x.Type == "UserId").Value ?? "";
+		username = CurrentUser;
+	}
+
+	var DtNow = DateTime.Now;
+}
+
+<!-- partial:partials/_navbar.html -->
+<nav class="navbar">
+	<a href="#" class="sidebar-toggler">
+		<i data-feather="menu"></i>
+	</a>
+	<div class="navbar-content">
+		<form class="search-form">
+			<div class="input-group align-items-center">
+				<h5 class="ml-2" id="navbarForm">Admin Panel Mitra SPBU</h5>
+			</div>
+		</form>
+		<ul class="navbar-nav">
+			<li class="nav-item dropdown nav-profile text-right text-nowrap">
+				<h6>@username.ToUpper()</h6>
+			</li>
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<img class="wd-30 ht-30 rounded-circle" src="~/assets/images/avatar_user.png" alt="profile">
+				</a>
+				<div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
+					<div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
+						<div class="mb-3">
+							<img class="wd-80 ht-80 rounded-circle" src="~/assets/images/avatar_user.png" alt="">
+						</div>
+						<div class="text-center">
+							<p class="tx-16 fw-bolder">@username</p>
+							<p class="tx-12 text-muted">@email</p>
+						</div>
+					</div>
+					<ul class="list-unstyled p-1">
+						<li class="dropdown-item py-2">
+							<a href="~/Home/Logout" class="text-body ms-0">
+								<i class="me-2 icon-md" data-feather="log-out"></i>
+								<span>Log Out</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+			</li>
+			@* <li class="nav-item dropdown nav-notifications">
+				<a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i data-feather="bell"></i>
+					<div class="indicator hide" id="div_indicator">
+						<div class="circle"></div>
+					</div>
+				</a>
+				<div class="dropdown-menu hide" aria-labelledby="notificationDropdown" id="Div_DdNotification">
+					<div class="dropdown-body scrollable-container" style="height:auto; max-height:500px; overflow:auto;" id="LsNotifTicketDetail">
+						<!-- Dynamic content will go here -->
+					</div>
+				</div>
+			</li> *@
+
+		</ul>
+	</div>
+</nav>
+<!-- partial -->

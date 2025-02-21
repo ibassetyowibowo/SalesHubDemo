@@ -1,0 +1,153 @@
+﻿
+<script src="~/assets/plugins/jquery-validation/jquery.validate.min.js"></script>
+<script src="~/assets/plugins/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/assets/plugins/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/assets/plugins/select2/select2.min.js"></script>
+<script src="~/assets/noble-ui/js/jquery.steps.min.js"></script>
+
+<script src="~/assets/noble-ui/js/wizard.js?v=1"></script>
+<script src="~/assets/js/select2.js?v=1"></script>
+
+
+<script>
+	$(document).ready(function () {
+
+		$(".currency").each(function () {
+			var value = $(this).text().replace('.', '').replace(',', '.');
+			value = parseFloat(value);
+
+			if (!isNaN(value)) {
+				$(this).text(value.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }));
+			}
+		});
+
+		$(".percentage").each(function () {
+			var value = parseFloat($(this).text());
+			$(this).text((value * 100).toFixed(2) + "%");
+		});
+
+		$('.form-select').select2({
+			escapeMarkup: function (markup) {
+				return markup;
+			}
+		});
+
+		$('#LokasiSPBU').change(function () {
+			var selectedValue = $(this).val();
+			var values = selectedValue.split("___");
+			var umkValue = values[0]; // The UMK value is at index 0
+			var umkNumber = parseFloat(umkValue.replace(/[^0-9.-]+/g, ""));
+			var idrFormatted = new Intl.NumberFormat('id-ID', {
+				style: 'currency',
+				currency: 'IDR',
+				minimumFractionDigits: 0 // Optional: To avoid showing decimals
+			}).format(umkNumber);
+			$('#umk').val(idrFormatted);
+		});
+
+		$('input[id^="SalesPerMonth"]').each(function () {
+			var priceInput = $(this);
+			priceInput.focus(function () {
+				if (priceInput.val() == "0") {
+					priceInput.val('');
+				}
+			});
+
+			priceInput.blur(function () {
+				if (priceInput.val() === '') {
+					priceInput.val('0');
+				}
+			});
+		});
+
+	});
+
+	var UrlOrigin = window.location.origin;
+	var UrlPath = window.location.pathname.split('/');
+	var NewUrl = new URL(window.location);
+
+	function showLoading() {
+		$("div.spanner").addClass("show");
+		$("div.overlay").addClass("show");
+	}
+
+	function stopLoading() {
+		$("div.spanner").removeClass("show");
+		$("div.overlay").removeClass("show");
+	}
+
+	function formatAndAppendCurrency(elementId, value) {
+		const formattedCurrency = parseFloat(value.replace('.', '').replace(',', '.'))
+			.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' });
+		$('#' + elementId).append(formattedCurrency);
+	}
+
+	// This function validates the form
+	function validateForm(event) {
+		// Prevent form submission
+		event.preventDefault();
+
+		// Retrieve form elements
+		const stationNo = document.getElementById("StationNo").value;
+		const namaBadanUsaha = document.getElementById("NamaBadanUsaha").value;
+		const stationAddress = document.getElementById("StationAddress").value;
+		const tlpOwner = document.getElementById("TlpOwner").value;
+		const namaLengkapOwner = document.getElementById("NamaLengkapOwner").value;
+		const emailOwner = document.getElementById("EmailOwner").value;
+
+		// Email and phone validation patterns
+		const emailPattern = /^[a-zA-Z0-9._-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+		const phonePattern = /^[0-9]{10,15}$/;
+
+		// Check if all required fields are filled
+		if (!stationNo || !namaBadanUsaha || !stationAddress || !tlpOwner || !namaLengkapOwner || !emailOwner) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Semua Field Harus Diisi',
+				text: 'Harap isi semua field yang wajib diisi.'
+			});
+			return false;
+		}
+
+		// Validate phone number format
+		if (!tlpOwner.match(phonePattern)) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Nomor Telepon Tidak Valid',
+				text: 'Harap masukkan nomor telepon yang valid dengan 10-15 digit.'
+			});
+			return false;
+		}
+
+
+		// Validate email format
+		if (!emailOwner.match(emailPattern)) {
+			Swal.fire({
+				icon: 'error',
+				title: 'Email Tidak Valid',
+				text: 'Harap masukkan alamat email yang valid.'
+			});
+			return false;
+		}
+
+		showLoading();
+		// If all validations pass, submit the form
+		document.getElementById("registerForm").submit();
+	}
+
+	function validateFormCalculator(event) {
+
+		event.preventDefault();
+		showLoading();
+		document.getElementById("form_calculator").submit();
+	}
+
+
+	function validateLoginForm(event) {
+
+		event.preventDefault();
+		showLoading();
+		document.getElementById("loginForm").submit();
+	}
+
+</script>

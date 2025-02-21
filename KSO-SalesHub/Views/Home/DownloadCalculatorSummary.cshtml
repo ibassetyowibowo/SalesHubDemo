@@ -1,0 +1,117 @@
+﻿@using KSO_SalesHub.Models.Simulation;
+@using System.Globalization;
+@model SimulationContainer;
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <style>
+        .currency {
+            font-variant-numeric: slashed-zero;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-bottom: 16px; margin-top: 24px; margin-bottom:20px;">
+        <img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+        <h4 style="margin-top: 8px; font-weight: bold;">Summary Simulation Calculator</h4>
+    </div>
+
+    <!-- Start of your card structure with data -->
+    <div class="card mb-2">
+        <div class="card-body p-3 ps-5">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <tr>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd; width: 20%;"><strong>Resume Kelayakan</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd; width: 30%;">
+                        : @if (Model.ResultCalculator.ResumeKelayakan == "LAYAK")
+                        {
+                            <span style="background-color: #28a745; color: white; padding: 2px 6px; border-radius: 12px; font-size: 12px;">@Model.ResultCalculator.ResumeKelayakan</span>
+                        }
+                        else
+                        {
+                            <span style="background-color: #dc3545; color: white; padding: 2px 6px; border-radius: 12px; font-size: 12px;">@Model.ResultCalculator.ResumeKelayakan</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Nomor SPBU</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model._calculator.NomorSPBU</td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Tipe / Grading SPBU</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model._calculator.SPBUGrading / @Model._calculator.SPBUType</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Prop. Sharing Margin Mitra</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model.ResultCalculator.PropSharingMarginMitra %</td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Jenis Produk BBM</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model.ResultCalculator.ProductBBMPercentage %</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Total Profit Mitra</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;" id="TotalProfitMitra">: @String.Format("{0:C0}", (Model.ResultCalculator.TotalProfitInOHCurency * (decimal)Model.ResultCalculator.PropSharingMarginMitra / 100)) </td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Jenis Produk BBK</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model.ResultCalculator.ProductBBKPercentage %</td>
+                </tr>
+                <tr>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>Status Pajak</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model._calculator.TaxStatus</td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;"><strong>UMK</strong></td>
+                    <td style="padding: 3px; border-bottom: 1px solid #ddd;">: @Model._calculator.UMK</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card mb-0" style="margin-top:20px;">
+        <div class="card-body p-3">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="border: 1px solid #ddd; text-align: center; width: 5%;">#</th>
+                        <th rowspan="2" style="border: 1px solid #ddd; text-align: center; width: 20%;">Product</th>
+                        <th rowspan="2" style="border: 1px solid #ddd; text-align: center; width: 15%;">Sales Monthly <br />(Liter)</th>
+                        <th rowspan="2" style="border: 1px solid #ddd; text-align: center; width: 15%;">Sales Per Day <br />(Liter)</th>
+                        <th rowspan="2" style="border: 1px solid #ddd; text-align: center; width: 15%;">Price Currency</th>
+                        <th rowspan="2" style="border: 1px solid #ddd; text-align: center; width: 15%;">Monthly Sales Currency</th>
+                        <th colspan="2" style="border: 1px solid #ddd; text-align: center; width: 25%;">Margin Dodo / Codo</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid #ddd; text-align: center; width: 12.5%;">Normal</th>
+                        <th style="border: 1px solid #ddd; text-align: center; width: 12.5%;">Normal + 5</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ResultCalculator.DetailSummary.Count; i++)
+                    {
+                        var item = Model.ResultCalculator.DetailSummary[i];
+                        <tr>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">@(i + 1)</td>
+                            <td style="padding: 3px; border: 1px solid #ddd;">@item.ProductName</td>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">@item.SalesMonthly</td>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">@item.SalesPerDay</td>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;" class="currency">@String.Format("{0:C0}", item.PriceCurrency)</td>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;" class="currency">@String.Format("{0:C0}", item.MonthlySalesCurency)</td>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;" class="currency">@String.Format("{0:C0}", item.MarginDodoCodoNormal)</td>
+                            <td style="padding: 3px; border: 1px solid #ddd; text-align: center;" class="currency">@String.Format("{0:C0}", item.MarginDodoCodoNormalAdding5)</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr style="font-weight: bolder;">
+                        <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">#</td>
+                        <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">Total</td>
+                        <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">@Model.ResultCalculator.DetailSummary.Select(x => x.SalesMonthly).Sum()</td>
+                        <td style="padding: 3px; border: 1px solid #ddd; text-align: center;">@Model.ResultCalculator.DetailSummary.Select(x => x.SalesPerDay).Sum()</td>
+                        <td style="padding: 3px; border: 1px solid #ddd; text-align: center;" class="currency">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.PriceCurrency).Sum())</td>
+                        <td style="padding: 3px; border: 1px solid #ddd; text-align: center;" class="currency">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.MonthlySalesCurency).Sum())</td>
+                        <td style="padding: 3px; border: 1px solid #ddd;" colspan="2"></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

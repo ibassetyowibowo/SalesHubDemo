@@ -1,0 +1,33 @@
+﻿@{
+	var userId = @User.FindFirst("UserId")?.Value;
+}
+
+<nav class="sidebar">
+	<div class="sidebar-header">
+		<a href="~/Home" class="sidebar-brand" style="font-size:18px;">
+			Admin Panel <br /> Mitra SPBU
+		</a>
+		<div class="sidebar-toggler not-active" id="sb-ticket">
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="sidebar-body">
+		<ul class="nav">
+			<li class="nav-item" id="">
+				<a href="~/admin-panel" class="nav-link">
+					<i class="link-icon" data-feather="home"></i>
+					<span class="link-title">Home</span>
+				</a>
+			</li>
+			<li class="nav-item nav-category">Main</li>
+			<li class="nav-item">
+				<a href="~/calculator-internal" class="nav-link">
+					<i class="link-icon" data-feather="edit"></i>
+					<span class="link-title">Calculator</span>
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>

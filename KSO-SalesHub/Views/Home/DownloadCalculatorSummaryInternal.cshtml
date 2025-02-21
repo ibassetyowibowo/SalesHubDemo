@@ -1,0 +1,165 @@
+﻿@using KSO_SalesHub.Models.Simulation;
+@using System.Globalization;
+@model SimulationContainer;
+@{
+    Layout = null;
+}
+
+<html>
+<head>
+    <style>
+        .currency {
+            font-variant-numeric: slashed-zero;
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="text-center mb-2 mt-3">
+        <img src="~/assets/images/ptpr-no-text.png" alt="logo" style="width: 50px;">
+        <h4 class="mt-2"><strong>Internal Summary Simulation Calculator</strong></h4>
+    </div>
+
+    <!-- Summary Information -->
+    <div class="card mb-2">
+        <div class="card-body p-3 ps-5">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>Resume Kelayakan</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">
+                        : 
+                        @if (Model.ResultCalculator.ResumeKelayakan == "LAYAK")
+                        {
+                            <span style="background-color: #28a745; color: white; padding: 2px 6px; border-radius: 12px; font-size: 12px;">@Model.ResultCalculator.ResumeKelayakan</span>
+                        }
+                        else
+                        {
+                            <span style="background-color: #dc3545; color: white; padding: 2px 6px; border-radius: 12px; font-size: 12px;">@Model.ResultCalculator.ResumeKelayakan</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; width: 20%;"><strong>Nomor SPBU</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; width: 25%;">: @Model._calculator.NomorSPBU</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; width: 20%;"><strong>Tipe / Grading SPBU</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; width: 25%;">: @Model._calculator.SPBUGrading / @Model._calculator.SPBUType</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>Prop. Sharing Margin Mitra</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">: @Model.ResultCalculator.PropSharingMarginMitra %</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; "><strong>Jenis Produk BBM</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">: @Model.ResultCalculator.ProductBBMPercentage %</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>Prop. Sharing Margin PTPR</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">: @Model.ResultCalculator.PropSharingMarginPTPR %</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; "><strong>Jenis Produk BBK</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">: @Model.ResultCalculator.ProductBBKPercentage %</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>UMK</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">: @Model._calculator.UMK</td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; "><strong>Status Pajak</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;">: @Model._calculator.TaxStatus</td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>Profit (Exclude OH)</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;" id="TotalProfitExOHCurency">: @String.Format("{0:C0}", Model.ResultCalculator.TotalProfitExOHCurency) </td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; "><strong>Opex Exclude Tax</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;" id="TotalOpexExTaxCurency">: @String.Format("{0:C0}", Model.ResultCalculator.TotalOpexExTaxCurency) </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>PPN 11%</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;" id="TotalPPN11Curency">: @String.Format("{0:C0}", Model.ResultCalculator.TotalPPN11Curency) </td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px; "><strong>Profit (Exclude Selisih Single Margin)</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;" id="TotalProfitExSSMCurency">: @String.Format("{0:C0}", Model.ResultCalculator.TotalProfitExSSMCurency) </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;"><strong>Profit (Include OH)</strong></td>
+                    <td style="border-bottom: 1px solid #ddd; padding: 8px;" id="TotalProfitInOHCurency">: @String.Format("{0:C0}", Model.ResultCalculator.TotalProfitInOHCurency) </td>
+                    <td colspan="2" style="border-bottom: 1px solid #ddd; padding: 8px;"></td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+
+    <!-- Detailed Table -->
+    <div class="card mb-0" style="margin-top:40px;">
+        <div class="card-body p-4">
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px; border: 1px solid #ddd;">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>#</strong></th>
+                        <th rowspan="2" style="padding: 8px; width: 110px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Product</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Sales Monthly (Liter)</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Sales Per Day (Liter)</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Price Currency</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Monthly Sales Currency</strong></th>
+                        <th colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Margin Dodo / Codo</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Margin PTPR</strong></th>
+                        <th colspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Selisih Single Margin</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Basic Price</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>PPH 22</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Overhead HO (Rp. 15,- per Liter)</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>Gross Margin Monthly SPBU</strong></th>
+                        <th rowspan="2" style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f2f2f2;"><strong>SHARING MITRA</strong></th>
+                    </tr>
+                    <tr>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f9f9f9;"><strong>Normal</strong></th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f9f9f9;"><strong>Normal + 5</strong></th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f9f9f9;"><strong>Normal</strong></th>
+                        <th style="padding: 8px; border: 1px solid #ddd; text-align: center; background-color: #f9f9f9;"><strong>Normal + 5</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ResultCalculator.DetailSummary.Count; i++)
+                    {
+                        var item = Model.ResultCalculator.DetailSummary[i];
+                        <tr>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@(i + 1)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; ">@item.ProductName</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@item.SalesMonthly</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@item.SalesPerDay</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.PriceCurrency)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.MonthlySalesCurency)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.MarginDodoCodoNormal)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.MarginDodoCodoNormalAdding5)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.MarginPTPR)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.SelisihSingleMarginNormal)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.SelisihSingleMarginAdding5)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.BasicPrice)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.PPH22Currency)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.OverHeadHOCurrency)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.GrossMarginMonthlySpbuCurrency)</td>
+                            <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", item.SharingMitraCurrency)</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr style="font-weight: bold;">
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">#</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">Total</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@Model.ResultCalculator.DetailSummary.Select(x => x.SalesMonthly).Sum()</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@Model.ResultCalculator.DetailSummary.Select(x => x.SalesPerDay).Sum()</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.PriceCurrency).Sum())</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.MonthlySalesCurency).Sum())</td>
+                        <td colspan="5" style="padding: 8px; border: 1px solid #ddd;"></td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.BasicPrice).Sum())</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.PPH22Currency).Sum())</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.OverHeadHOCurrency).Sum())</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.GrossMarginMonthlySpbuCurrency).Sum())</td>
+                        <td style="padding: 8px; font-size:9px; border: 1px solid #ddd; text-align: center;">@String.Format("{0:C0}", Model.ResultCalculator.DetailSummary.Select(x => x.SharingMitraCurrency).Sum())</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+
+        </div>
+    </div>
+</body>
+</html>
