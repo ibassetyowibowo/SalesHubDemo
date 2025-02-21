@@ -11,12 +11,12 @@ WORKDIR "/src/KSO-SalesHub"
 RUN dotnet restore
 
 COPY . .
-RUN dotnet build -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build -c $BUILD_CONFIGURATION -o /src/build /p:UseAppHost=false
 
 FROM build AS publish
-RUN dotnet publish -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish -c $BUILD_CONFIGURATION -o /src/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=publish /src/publish .
 ENTRYPOINT ["dotnet", "KSO-SalesHub.dll"]
