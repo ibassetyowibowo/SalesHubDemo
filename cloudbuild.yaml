@@ -1,7 +1,7 @@
 steps:
   # Step 1: Build the Docker image using the Dockerfile
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/silent-album-443608-j2/netcoredeploy', '.']
+    args: ['build', '-t', 'gcr.io/saleshubdemo/netcoredeploy', '.']
 
   # Step 2: Deploy the image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
@@ -11,14 +11,14 @@ steps:
       - |
         echo "Running deployment to Cloud Run..."
         gcloud run deploy netcoredeploy \
-          --image gcr.io/silent-album-443608-j2/netcoredeploy \
+          --image gcr.io/saleshubdemo/netcoredeploy \
           --platform managed \
           --region us-central1 \
           --allow-unauthenticated
           --timeout 1200s
 
 images:
-  - 'gcr.io/silent-album-443608-j2/netcoredeploy'
+  - 'gcr.io/saleshubdemo/netcoredeploy'
 
 timeout: 1200s  # Menentukan waktu tunggu build
 
